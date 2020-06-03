@@ -172,3 +172,160 @@ void MoireRemove(Mat imgin, Mat imgout)
 		}
 	return;
 }
+
+void TaoBoLocChuNhat(Mat imgin)
+{
+	int M = imgin.size().height;
+	int N = imgin.size().width;
+	Mat temp = Mat(M, N, CV_32FC1);
+	int x, y;
+	int vitri_y0 = 23;
+	int vitri_y1 = 188;
+	int vitri_y2 = 612;
+	int vitri_y3 = 777;
+	double D0 = 5;
+	double n = 3;
+	double Du;
+	double H, H0, H1, H2, H3;
+	for (x = 0; x < M; x++)
+		for (y = 0; y < N; y++)
+		{
+			Du = y - vitri_y0;
+			H0 = 1.0 / (1.0 + pow(D0 / Du, 2 * n));
+			Du = y - vitri_y1;
+			H1 = 1.0 / (1.0 + pow(D0 / Du, 2 * n));
+			Du = y - vitri_y2;
+			H2 = 1.0 / (1.0 + pow(D0 / Du, 2 * n));
+			Du = y - vitri_y3;
+			H3 = 1.0 / (1.0 + pow(D0 / Du, 2 * n));
+			H = H0*H1*H2*H3;
+			temp.at<float>(x, y) = (float)H;
+		}
+	int vitri_x0 = 16;
+	int vitri_x1 = 121;
+	int vitri_x2 = 391;
+	int vitri_x3 = 496;
+	double Dv;
+	for (y = 0; y < N; y++)
+		for (x = 0; x < M; x++)
+		{
+			Dv = x - vitri_x0;
+			H0 = 1.0 / (1.0 + pow(D0 / Dv, 2 * n));
+			Dv = x - vitri_x1;
+			H1 = 1.0 / (1.0 + pow(D0 / Dv, 2 * n));
+			Dv = x - vitri_x2;
+			H2 = 1.0 / (1.0 + pow(D0 / Dv, 2 * n));
+			Dv = x - vitri_x3;
+			H3 = 1.0 / (1.0 + pow(D0 / Dv, 2 * n));
+			H = temp.at<float>(x, y);
+			H = H * H0 * H1 * H2 * H3;
+			temp.at<float>(x, y) = (float)H;
+			imgin.at<uchar>(x, y) = (uchar)(H*L);
+		}
+	//for (x = 0; x < M; x++)
+	//	for (y = 0; y < N; y++)
+	//	{
+	//		H = temp.at<float>(x, y);
+	//		imgin.at<uchar>(x, y) = (uchar)(H*L);
+	//	}
+	return;
+}
+
+void PeriodRemove(Mat imgin, Mat imgout)
+{
+	int M = imgin.size().height;
+	int N = imgin.size().width;
+
+	// Buoc 1, 2, 3
+	int P = getOptimalDFTSize(M);
+	int Q = getOptimalDFTSize(N);
+	Mat f = Mat(P, Q, CV_32FC2, CV_RGB(0, 0, 0));
+	int x, y;
+	for (x = 0; x < M; x++)
+		for (y = 0; y < N; y++)
+			if ((x + y) % 2 == 0)
+				f.at<Vec2f>(x, y)[0] = (float)(1.0*imgin.at<uchar>(x, y));
+			else
+				f.at<Vec2f>(x, y)[0] = (float)(-1.0*imgin.at<uchar>(x, y));
+
+	// Buoc 4
+	Mat F = Mat(P, Q, CV_32FC2, CV_RGB(0, 0, 0));
+	dft(f, F);
+
+	// Buoc 5
+	Mat H = Mat(P, Q, CV_32FC2, CV_RGB(0, 0, 0));
+
+	int vitri_y0 = 23;
+	int vitri_y1 = 188;
+	int vitri_y2 = 612;
+	int vitri_y3 = 777;
+	int vitri_y4 = 400;
+	double D0 = 5;
+	double n = 4;
+	double Du;
+	double HH, H0, H1, H2, H3, H4;
+	for (x = 0; x < P; x++)
+		for (y = 0; y < Q; y++)
+		{
+			Du = y - vitri_y0;
+			H0 = 1.0 / (1.0 + pow(D0 / Du, 2 * n));
+			Du = y - vitri_y1;
+			H1 = 1.0 / (1.0 + pow(D0 / Du, 2 * n));
+			Du = y - vitri_y2;
+			H2 = 1.0 / (1.0 + pow(D0 / Du, 2 * n));
+			Du = y - vitri_y3;
+			H3 = 1.0 / (1.0 + pow(D0 / Du, 2 * n));
+			Du = y - vitri_y4;
+			H4 = 1.0 / (1.0 + pow(D0 / Du, 2 * n));
+
+			HH = H4;
+			H.at<Vec2f>(x, y)[0] = (float)HH;
+		}
+	int vitri_x0 = 16;
+	int vitri_x1 = 121;
+	int vitri_x2 = 391;
+	int vitri_x3 = 496;
+	int vitri_x4 = 256;
+	double Dv;
+	for (y = 0; y < Q; y++)
+		for (x = 0; x < P; x++)
+		{
+			Dv = x - vitri_x0;
+			H0 = 1.0 / (1.0 + pow(D0 / Dv, 2 * n));
+			Dv = x - vitri_x1;
+			H1 = 1.0 / (1.0 + pow(D0 / Dv, 2 * n));
+			Dv = x - vitri_x2;
+			H2 = 1.0 / (1.0 + pow(D0 / Dv, 2 * n));
+			Dv = x - vitri_x3;
+			H3 = 1.0 / (1.0 + pow(D0 / Dv, 2 * n));
+			Dv = x - vitri_x4;
+			H4 = 1.0 / (1.0 + pow(D0 / Dv, 2 * n));
+			HH = H.at<Vec2f>(x, y)[0];
+			HH = HH * H4;
+			H.at<Vec2f>(x, y) = (float)HH;
+			H.at<Vec2f>(x, y)[0] = (float)HH;
+		}
+
+
+	Mat G = Mat(P, Q, CV_32FC2, CV_RGB(0, 0, 0));
+	mulSpectrums(F, H, G, DFT_ROWS);
+
+	// Buoc 6, 7
+	Mat g = Mat(P, Q, CV_32FC2, CV_RGB(0, 0, 0));
+	idft(G, g, DFT_SCALE);
+
+	float r;
+	for (x = 0; x < M; x++)
+		for (y = 0; y < N; y++) {
+			if ((x + y) % 2 == 0)
+				r = g.at<Vec2f>(x, y)[0];
+			else
+				r = -g.at<Vec2f>(x, y)[0];
+			if (r < 0)
+				r = 0;
+			if (r > L - 1)
+				r = L - 1;
+			imgout.at<uchar>(x, y) = (uchar)r;
+		}
+	return;
+}

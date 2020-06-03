@@ -21,3 +21,5 @@ void LowpassFilter(Mat imgin, Mat imgout);
 void Fourier(Mat imgin, Mat imgout);
 void FilterFrequency(Mat imgin, Mat imgout);
 void MoireRemove(Mat imgin, Mat imgout);
+void TaoBoLocChuNhat(Mat imgin);
+void PeriodRemove(Mat imgin, Mat imgout);

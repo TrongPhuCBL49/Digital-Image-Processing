@@ -233,6 +233,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				namedWindow("Image Out", WINDOW_AUTOSIZE);
 				imshow("Image Out", imgout);
 				break;
+			case ID_CHAPTER4_BOLOCCHUNHAT:
+			{
+				int M = 512;
+				int N = 800;
+				imgin = Mat(M, N, CV_8UC1, CV_RGB(255, 255, 255));
+				TaoBoLocChuNhat(imgin);
+
+				namedWindow("Image In", WINDOW_AUTOSIZE);
+				imshow("Image In", imgin);
+			}
+
+			break;
+			case ID_CHAPTER4_PERIODREMOVE:
+				imgout = Mat(imgin.size(), CV_8UC1);
+				PeriodRemove(imgin, imgout);
+				namedWindow("Image Out", WINDOW_AUTOSIZE);
+				imshow("Image Out", imgout);
+				break;
 
 			case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
