@@ -26,6 +26,10 @@
 #define ID_CHAPTER4_MOIREREMOVE         32782
 #define ID_CHAPTER4_BOLOCCHUNHAT        32783
 #define ID_CHAPTER4_PERIODREMOVE        32784
+#define ID_CHAPTER9_GRAYSCALEEROSION    32785
+#define ID_CHAPTER9_GRAYSCALEDILATION   32786
+#define ID_CHAPTER9_GRAYSCALEOPENING    32787
+#define ID_CHAPTER9_GRAYSCALECLOSING    32788
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -34,7 +38,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        129
-#define _APS_NEXT_COMMAND_VALUE         32785
+#define _APS_NEXT_COMMAND_VALUE         32789
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

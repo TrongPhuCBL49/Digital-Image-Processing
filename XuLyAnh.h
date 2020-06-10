@@ -23,3 +23,9 @@ void FilterFrequency(Mat imgin, Mat imgout);
 void MoireRemove(Mat imgin, Mat imgout);
 void TaoBoLocChuNhat(Mat imgin);
 void PeriodRemove(Mat imgin, Mat imgout);
+
+//Chuong 9
+void GrayScaleErosion(Mat imgin, Mat imgout);
+void GrayScaleDilation(Mat imgin, Mat imgout);
+void GrayScaleOpening(Mat imgin, Mat imgout);
+void GrayScaleClosing(Mat imgin, Mat imgout);

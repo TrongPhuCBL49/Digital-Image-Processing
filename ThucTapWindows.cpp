@@ -251,7 +251,30 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				namedWindow("Image Out", WINDOW_AUTOSIZE);
 				imshow("Image Out", imgout);
 				break;
-
+			case ID_CHAPTER9_GRAYSCALEEROSION:
+				imgout = Mat(imgin.size(), CV_8UC1);
+				GrayScaleErosion(imgin, imgout);
+				namedWindow("Image Out", WINDOW_AUTOSIZE);
+				imshow("Image Out", imgout);
+				break;
+			case ID_CHAPTER9_GRAYSCALEDILATION:
+				imgout = Mat(imgin.size(), CV_8UC1);
+				GrayScaleDilation(imgin, imgout);
+				namedWindow("Image Out", WINDOW_AUTOSIZE);
+				imshow("Image Out", imgout);
+				break;
+			case ID_CHAPTER9_GRAYSCALEOPENING:
+				imgout = Mat(imgin.size(), CV_8UC1);
+				GrayScaleOpening(imgin, imgout);
+				namedWindow("Image Out", WINDOW_AUTOSIZE);
+				imshow("Image Out", imgout);
+				break;
+			case ID_CHAPTER9_GRAYSCALECLOSING:
+				imgout = Mat(imgin.size(), CV_8UC1);
+				GrayScaleClosing(imgin, imgout);
+				namedWindow("Image Out", WINDOW_AUTOSIZE);
+				imshow("Image Out", imgout);
+				break;
 			case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
